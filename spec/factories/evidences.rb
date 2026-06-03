@@ -2,12 +2,13 @@
 
 FactoryBot.define do
   factory :evidence do
-    scout_run { nil }
+    association :scout_run
+
     opportunity { nil }
-    source { 'MyString' }
-    title { 'MyString' }
-    url { 'MyString' }
-    summary { 'MyText' }
-    signal_type { 'MyString' }
+    source { 'github' }
+    title { 'Users ask for better documentation search' }
+    url { 'https://github.com/example/project/issues/1' }
+    summary { 'Issue thread shows repeated demand for better documentation discovery.' }
+    signal_type { 'feature_request' }
   end
 end

@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :user_profile do
-    name { 'MyString' }
-    background { 'MyText' }
-    available_days { 1 }
-    github_url { 'MyString' }
-    linkedin_url { 'MyString' }
+    name { 'Aliaksei Mikitsik' }
+    background { 'Ruby/Rails developer focused on AI, PostgreSQL, Hotwire and automation.' }
+    available_days { 30 }
+    github_url { 'https://github.com/mikitsik' }
+    linkedin_url { 'https://www.linkedin.com/in/mikitsik' }
   end
 end
