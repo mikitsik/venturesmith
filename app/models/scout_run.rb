@@ -4,6 +4,8 @@ class ScoutRun < ApplicationRecord
   STATUSES = %w[draft requested processing completed failed].freeze
 
   belongs_to :user_profile
+  has_many :opportunities, dependent: :destroy
+  has_many :evidences, dependent: :destroy
 
   validates :goal, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }

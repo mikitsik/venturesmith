@@ -10,9 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_03_161807) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_03_163257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "evidences", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "opportunity_id"
+    t.bigint "scout_run_id", null: false
+    t.string "signal_type"
+    t.string "source", null: false
+    t.text "summary"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.string "url"
+    t.index ["opportunity_id"], name: "index_evidences_on_opportunity_id"
+    t.index ["scout_run_id"], name: "index_evidences_on_scout_run_id"
+    t.index ["signal_type"], name: "index_evidences_on_signal_type"
+    t.index ["source"], name: "index_evidences_on_source"
+  end
+
+  create_table "opportunities", force: :cascade do |t|
+    t.string "audience"
+    t.integer "build_fit"
+    t.datetime "created_at", null: false
+    t.text "evidence_summary"
+    t.text "mvp_plan"
+    t.text "problem", null: false
+    t.integer "score", null: false
+    t.bigint "scout_run_id", null: false
+    t.integer "time_fit"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["score"], name: "index_opportunities_on_score"
+    t.index ["scout_run_id"], name: "index_opportunities_on_scout_run_id"
+  end
 
   create_table "scout_runs", force: :cascade do |t|
     t.string "callback_tx_hash"
@@ -42,5 +74,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_161807) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "evidences", "opportunities"
+  add_foreign_key "evidences", "scout_runs"
+  add_foreign_key "opportunities", "scout_runs"
   add_foreign_key "scout_runs", "user_profiles"
 end

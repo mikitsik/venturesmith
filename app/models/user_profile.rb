@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UserProfile < ApplicationRecord
+  has_many :scout_runs, dependent: :destroy
+
   validates :background, presence: true
   validates :available_days, presence: true
 
@@ -11,6 +13,4 @@ class UserProfile < ApplicationRecord
   validates :linkedin_url,
             format: URI::DEFAULT_PARSER.make_regexp,
             allow_blank: true
-
-  has_many :scout_runs, dependent: :destroy
 end
