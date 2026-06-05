@@ -1,0 +1,21 @@
+<h1><%= @user_profile.name.presence || 'Founder profile' %></h1>
+
+<p><%= simple_format(@user_profile.background) %></p>
+
+<p>Available days: <%= @user_profile.available_days %></p>
+
+<h2>Run Scout Agent</h2>
+
+<%= form_with model: [@user_profile, @scout_run] do |form| %>
+  <div>
+    <%= form.label :goal %>
+    <%= form.text_area :goal, rows: 4 %>
+  </div>
+
+  <div>
+    <%= form.label :wallet_address %>
+    <%= form.text_field :wallet_address %>
+  </div>
+
+  <%= form.submit 'Run Scout' %>
+<% end %>

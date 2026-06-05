@@ -1,0 +1,30 @@
+<h1>VentureSmith</h1>
+
+<%= form_with model: @user_profile do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :background %>
+    <%= form.text_area :background, rows: 8 %>
+  </div>
+
+  <div>
+    <%= form.label :available_days %>
+    <%= form.number_field :available_days %>
+  </div>
+
+  <div>
+    <%= form.label :github_url %>
+    <%= form.url_field :github_url %>
+  </div>
+
+  <div>
+    <%= form.label :linkedin_url %>
+    <%= form.url_field :linkedin_url %>
+  </div>
+
+  <%= form.submit 'Create profile' %>
+<% end %>

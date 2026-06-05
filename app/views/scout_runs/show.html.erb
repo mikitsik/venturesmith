@@ -1,0 +1,17 @@
+<h1>Scout Run</h1>
+
+<p>Status: <%= @scout_run.status %></p>
+<p>Goal: <%= @scout_run.goal %></p>
+<p>Wallet: <%= @scout_run.wallet_address.presence || 'not connected yet' %></p>
+
+<h2>Somnia Request</h2>
+
+<% if @scout_run.somnia_request.present? %>
+  <p>Agent ID: <%= @scout_run.somnia_request.agent_id %></p>
+  <p>Status: <%= @scout_run.somnia_request.status %></p>
+  <p>Request ID: <%= @scout_run.somnia_request.request_id.presence || 'pending' %></p>
+  <p>Request TX: <%= @scout_run.somnia_request.request_tx_hash.presence || 'pending' %></p>
+  <p>Callback TX: <%= @scout_run.somnia_request.callback_tx_hash.presence || 'pending' %></p>
+<% else %>
+  <p>No Somnia request yet.</p>
+<% end %>
