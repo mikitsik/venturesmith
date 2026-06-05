@@ -8,7 +8,7 @@ RSpec.describe ScoutRun, type: :model do
   it { is_expected.to belong_to(:user_profile) }
   it { is_expected.to have_many(:opportunities).dependent(:destroy) }
   it { is_expected.to have_many(:evidences).dependent(:destroy) }
-  it { is_expected.to have_one(:somnia_request).dependent(:destroy) }
+  it { is_expected.to have_many(:somnia_requests).dependent(:destroy) }
 
   it { is_expected.to validate_presence_of(:goal) }
   it { is_expected.to validate_presence_of(:status) }

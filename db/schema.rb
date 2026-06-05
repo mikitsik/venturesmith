@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_03_165428) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_101632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_165428) do
 
   create_table "somnia_requests", force: :cascade do |t|
     t.string "agent_id", null: false
+    t.string "agent_kind", default: "llm_inference", null: false
     t.string "callback_tx_hash"
     t.datetime "created_at", null: false
     t.jsonb "payload", default: {}, null: false
@@ -73,13 +74,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_165428) do
     t.string "request_tx_hash"
     t.jsonb "response", default: {}, null: false
     t.bigint "scout_run_id", null: false
+    t.string "stage", default: "evaluation", null: false
     t.string "status", default: "draft", null: false
     t.datetime "updated_at", null: false
     t.index ["agent_id"], name: "index_somnia_requests_on_agent_id"
+    t.index ["agent_kind"], name: "index_somnia_requests_on_agent_kind"
     t.index ["callback_tx_hash"], name: "index_somnia_requests_on_callback_tx_hash"
     t.index ["request_id"], name: "index_somnia_requests_on_request_id", unique: true
     t.index ["request_tx_hash"], name: "index_somnia_requests_on_request_tx_hash"
     t.index ["scout_run_id"], name: "index_somnia_requests_on_scout_run_id"
+    t.index ["stage"], name: "index_somnia_requests_on_stage"
     t.index ["status"], name: "index_somnia_requests_on_status"
   end
 

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class ScoutRun < ApplicationRecord
-  STATUSES = %w[draft requested processing completed failed].freeze
+  STATUSES = %w[draft discovering extracting reasoning completed failed].freeze
 
   belongs_to :user_profile
   has_many :opportunities, dependent: :destroy
   has_many :evidences, dependent: :destroy
-  has_one :somnia_request, dependent: :destroy
+  has_many :somnia_requests, dependent: :destroy
 
   validates :goal, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }

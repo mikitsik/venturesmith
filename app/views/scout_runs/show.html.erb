@@ -1,17 +1,37 @@
 <h1>Scout Run</h1>
 
-<p>Status: <%= @scout_run.status %></p>
-<p>Goal: <%= @scout_run.goal %></p>
-<p>Wallet: <%= @scout_run.wallet_address.presence || 'not connected yet' %></p>
+<p><strong>Status:</strong> <%= @scout_run.status %></p>
+<p><strong>Goal:</strong> <%= @scout_run.goal %></p>
+<p><strong>Wallet:</strong> <%= @scout_run.wallet_address.presence || 'not connected yet' %></p>
 
-<h2>Somnia Request</h2>
+<hr>
 
-<% if @scout_run.somnia_request.present? %>
-  <p>Agent ID: <%= @scout_run.somnia_request.agent_id %></p>
-  <p>Status: <%= @scout_run.somnia_request.status %></p>
-  <p>Request ID: <%= @scout_run.somnia_request.request_id.presence || 'pending' %></p>
-  <p>Request TX: <%= @scout_run.somnia_request.request_tx_hash.presence || 'pending' %></p>
-  <p>Callback TX: <%= @scout_run.somnia_request.callback_tx_hash.presence || 'pending' %></p>
+<h2>Somnia Agent Pipeline</h2>
+
+<% if @scout_run.somnia_requests.any? %>
+  <ol>
+    <% @scout_run.somnia_requests.order(:created_at).each do |request| %>
+      <li>
+        <h3><%= request.stage.humanize %></h3>
+
+        <p><strong>Agent kind:</strong> <%= request.agent_kind %></p>
+        <p><strong>Agent ID:</strong> <%= request.agent_id %></p>
+        <p><strong>Status:</strong> <%= request.status %></p>
+        <p><strong>Request ID:</strong> <%= request.request_id.presence || 'pending' %></p>
+        <p><strong>Request TX:</strong> <%= request.request_tx_hash.presence || 'pending' %></p>
+        <p><strong>Callback TX:</strong> <%= request.callback_tx_hash.presence || 'pending' %></p>
+
+        <details>
+          <summary>Payload</summary>
+          <pre><%= JSON.pretty_generate(request.payload) %></pre>
+        </details>
+      </li>
+    <% end %>
+  </ol>
 <% else %>
-  <p>No Somnia request yet.</p>
+  <p>No Somnia agent requests yet.</p>
 <% end %>
+
+<hr>
+
+<%= link_to 'Back to profile', @scout_run.user_profile %>
