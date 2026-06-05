@@ -36,3 +36,19 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Hardhat
+/contracts/node_modules/
+/contracts/artifacts/
+/contracts/cache/
+/contracts/typechain-types/
+/contracts/coverage/
+/contracts/coverage.json
+
+# Secrets
+/contracts/.env
+/contracts/.env.local
+/contracts/.env.*.local
+
+# Optional
+/contracts/ignition/deployments/
