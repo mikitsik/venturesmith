@@ -37,18 +37,22 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 
-# Hardhat
+# Hardhat / Solidity extras
 /contracts/node_modules/
 /contracts/artifacts/
 /contracts/cache/
 /contracts/typechain-types/
 /contracts/coverage/
 /contracts/coverage.json
+/contracts/.openzeppelin/
+/contracts/deployments/
+/contracts/flattened/
+/contracts/*.bak
 
 # Secrets
 /contracts/.env
-/contracts/.env.local
-/contracts/.env.*.local
+/contracts/.env.*
+!/contracts/.env.example
 
 # Optional
 /contracts/ignition/deployments/
