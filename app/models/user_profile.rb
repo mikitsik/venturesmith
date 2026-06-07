@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class UserProfile < ApplicationRecord
+  has_many :somnia_requests, dependent: :destroy
   has_many :scout_runs, dependent: :destroy
 
   validates :background, presence: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_06_201413) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_07_132513) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -80,10 +80,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_06_201413) do
     t.string "request_id"
     t.string "request_tx_hash"
     t.jsonb "response", default: {}, null: false
-    t.bigint "scout_run_id", null: false
+    t.bigint "scout_run_id"
     t.string "stage", default: "evaluation", null: false
     t.string "status", default: "draft", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_profile_id"
     t.index ["agent_id"], name: "index_somnia_requests_on_agent_id"
     t.index ["agent_kind"], name: "index_somnia_requests_on_agent_kind"
     t.index ["callback_tx_hash"], name: "index_somnia_requests_on_callback_tx_hash"
@@ -92,6 +93,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_06_201413) do
     t.index ["scout_run_id"], name: "index_somnia_requests_on_scout_run_id"
     t.index ["stage"], name: "index_somnia_requests_on_stage"
     t.index ["status"], name: "index_somnia_requests_on_status"
+    t.index ["user_profile_id"], name: "index_somnia_requests_on_user_profile_id"
   end
 
   create_table "user_profiles", force: :cascade do |t|
@@ -109,4 +111,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_06_201413) do
   add_foreign_key "opportunities", "scout_runs"
   add_foreign_key "scout_runs", "user_profiles"
   add_foreign_key "somnia_requests", "scout_runs"
+  add_foreign_key "somnia_requests", "user_profiles"
 end
