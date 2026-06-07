@@ -16,7 +16,7 @@ module Somnia
         stage: 'github_discovery',
         status: 'draft',
         payload: github_discovery_payload,
-        response: {}
+        response: initial_response
       )
     end
 
@@ -28,11 +28,15 @@ module Somnia
         stage: 'founder_profile_inference',
         status: 'draft',
         payload: inference_payload(github_request),
-        response: {}
+        response: initial_response
       )
     end
 
     private
+
+    def initial_response
+      { data: [] }
+    end
 
     def github_discovery_payload
       {
