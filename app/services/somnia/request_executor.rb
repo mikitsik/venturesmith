@@ -30,7 +30,7 @@ module Somnia
         response: {
           result: result.fetch('result'),
           callback_sender: result.fetch('callback_sender'),
-          callback_data: result.fetch('callback_data')
+          callback_data_hash: result.fetch('callback_data_hash')
         }
       )
 
@@ -40,7 +40,10 @@ module Somnia
     private
 
     def validate_request!
-      raise ArgumentError, 'Only JSON API Request Agent is supported now' unless somnia_request.agent_kind == 'json_api_request'
+      unless somnia_request.agent_kind == 'json_api_request'
+        raise ArgumentError,
+              'Only JSON API Request Agent is supported now'
+      end
       raise ArgumentError, 'SomniaRequest must be draft' unless somnia_request.status == 'draft'
       raise ArgumentError, 'GitHub discovery URL is missing' if request_url.blank?
       raise ArgumentError, 'Callback receiver address is missing' if callback_address.blank?
@@ -88,7 +91,7 @@ module Somnia
     end
 
     def callback_address
-      ENV['SOMNIA_RAW_CALLBACK_RECEIVER_ADDRESS']
+      ENV.fetch('SOMNIA_RAW_CALLBACK_RECEIVER_ADDRESS', nil)
     end
 
     def contracts_path

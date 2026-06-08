@@ -103,21 +103,28 @@ async function main() {
 
   if (!receiver) {
     console.log("No callback receiver configured.");
+
+    console.log(JSON.stringify({
+      tx_hash: tx.hash,
+      request_id: requestId.toString()
+    }));
+
     return;
   }
 
   const callback = await waitForCallback(receiver, callbackCountBefore);
-
-  console.log("Callback count after:", callback.callbackCount.toString());
-  console.log("Last sender:", callback.lastSender);
-  console.log("Last data:", callback.lastData);
-
   const decoded = decodeCallbackData(callback.lastData);
+
   const [result] = agentInterface.decodeFunctionResult(
     "fetchString",
     decoded.responses[0].result
   );
 
+  const callbackDataHash = hashHexBytes(callback.lastData);
+
+  console.log("Callback count after:", callback.callbackCount.toString());
+  console.log("Last sender:", callback.lastSender);
+  console.log("Callback data hash:", callbackDataHash);
   console.log("Decoded result:", result);
 
   console.log(JSON.stringify({
@@ -125,7 +132,7 @@ async function main() {
     request_id: requestId.toString(),
     callback_count: callback.callbackCount.toString(),
     callback_sender: callback.lastSender,
-    callback_data: callback.lastData,
+    callback_data_hash: callbackDataHash,
     result
   }));
 }
@@ -178,6 +185,7 @@ async function waitForCallback(receiver, callbackCountBefore) {
 function decodeCallbackData(rawData) {
   const abiCoder = hre.ethers.AbiCoder.defaultAbiCoder();
 
+  // First 4 bytes are callback selector 0x00000000.
   const encodedArgs = `0x${rawData.slice(10)}`;
 
   const responseType =
@@ -202,6 +210,10 @@ function decodeCallbackData(rawData) {
     status,
     request
   };
+}
+
+function hashHexBytes(value) {
+  return hre.ethers.keccak256(value);
 }
 
 function sleep(ms) {
