@@ -77,6 +77,6 @@ gem 'rubocop', '~> 1.87', groups: %i[development test], require: false
 
 gem 'rubocop-rails', '~> 2.35', groups: %i[development test], require: false
 
-gem 'rubocop-rspec', '~> 3.9', groups: %i[development test], require: false
+gem 'rubocop-rspec', '~> 3.10', groups: %i[development test], require: false
 
 gem 'rubocop-performance', '~> 1.26', groups: %i[development test], require: false
